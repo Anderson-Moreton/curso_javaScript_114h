@@ -31,10 +31,6 @@
         document.querySelector(".hero-content").appendChild(p)
     }
 
-
-
-
-
     function getDate(str) {
         const [date, hour] = str.split(" ")
         const [day, month, year] = date.split("/")
