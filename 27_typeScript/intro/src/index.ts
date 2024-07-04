@@ -1,3 +1,3 @@
 const msg = "string 2"
 
-export default msg
+console.log(msg)
