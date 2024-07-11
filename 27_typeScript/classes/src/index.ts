@@ -60,3 +60,24 @@ const duke = new Cachorro("Duke")
 console.log(duke)
 duke.mostrarDetalhes()
 duke.mostrarCategoria()
+
+class Cliente {
+    private readonly _listaAnimais: Animal[] = []
+    private _tempListaAnimais: Animal[] = []
+
+    adicionarAnimais(...animais: Animal[]) : void {
+        this._listaAnimais.push(...animais)
+
+        this._tempListaAnimais.length = 0
+        this._tempListaAnimais = [...this._listaAnimais]
+    }
+    get listaAnimais() {
+        return [...this._tempListaAnimais]
+    }
+}
+
+const anderson = new Cliente()
+anderson.adicionarAnimais(duke, mingal) 
+// anderson.listaAnimais.pop() private não deixa alterar
+anderson.listaAnimais.length = 0
+console.log(anderson)
