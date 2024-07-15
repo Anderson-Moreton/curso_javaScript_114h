@@ -67,12 +67,12 @@ interface Pessoa {
     idade: number
 }
 
-const daniel: Pessoa = {
-    name: "daniel",
+const amderson: Pessoa = {
+    name: "Anderson",
     idade: 20
 }
 
-console.log(daniel)
+console.log(anderson)
 
 type TesteT = number | { qtd: number }
 const idade: TesteT = { qtd: 1 }
