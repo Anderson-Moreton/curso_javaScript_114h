@@ -1,6 +1,6 @@
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
-type ResponseUser = {
+export type ResponseUser = {
     name: string,
     id: number,
     email: string
@@ -12,7 +12,14 @@ axios.get<Array<ResponseUser>>("https://localhost:3001/users").then((response) =
 })
 
 const maria: ResponseUser = { name: "maria", id: 2, email: "maria.gostosa@gmail.com" }
-maria.id++
-axios.post<ResponseUser>("https://localhost:3001/users", maria).then( (response) => {
+
+axios.post<ResponseUser>("https://localhost:3001/users", {name: "Paulo", email: "paulo.top@gmail.com"} ).then( (response) => {
     console.log(response.data.id)
 })
+
+const getUser = (id: number): Promise<AxiosResponse<ResponseUser>> => {
+    return axios.get("https://localhost:3001/users/" + id)
+}
+
+console.log("getUser(2)")
+getUser(2).then((resposta) => console.log(resposta.data.id))
