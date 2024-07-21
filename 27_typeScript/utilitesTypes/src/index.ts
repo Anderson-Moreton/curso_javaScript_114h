@@ -54,7 +54,7 @@ type SadColor = "black" | "white" | "gray" | "blue dark"
 //Extract
 type SadSquareColor = Extract<SquareColor, SadColor>
 type HappySquareColor = Exclude<SquareColor, SadColor>
-
+               
 type User = {
     readonly name: string,
     email: string,
@@ -62,3 +62,27 @@ type User = {
 }
 
 
+//Required
+type UserGet = Required<User>
+
+type UserPatch = Partial<User>
+const maria: UserPatch = { id: 2 }
+
+// Readonly
+type UserRead = Readonly<User>
+const anderson: User = {
+    name: "Anderson",
+    email: "anderson.moreton@gmail.com"
+}
+
+anderson.email = "email alterado"
+
+//NonNullable
+type Cpf = {cpf: string}
+type Cnpj = {cnpj: string}
+
+type User2 = Cpf | Cnpj | null | undefined
+
+const user: NonNullable<User2> = {
+    cpf: ""
+}
