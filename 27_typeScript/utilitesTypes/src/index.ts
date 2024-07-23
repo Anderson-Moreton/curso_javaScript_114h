@@ -86,3 +86,71 @@ type User2 = Cpf | Cnpj | null | undefined
 const user: NonNullable<User2> = {
     cpf: ""
 }
+
+//Redord<T, U>
+
+type Url = {
+    url: string
+}
+
+type SocialMedia = "facebook" | "instagram" | "youtube" | "tiktok"
+
+const media: Record<SocialMedia, Url> = {
+    facebook: {url: "facebook.com"},
+    instagram: {url: "instargam.com"},
+    youtube: {url: "youtube.com"},
+    tiktok: {url: "tiktok.com"}
+}
+
+console.log(media)
+
+// Conditional Types
+
+type MyString = string
+type MyType = MyString extends string | number ? string : boolean
+
+function myFunction<T>(paran: T extends string ? string : number){
+
+}
+
+myFunction<boolean>(20)
+
+function myFunction2<T>(param: T){
+    return function(param2: T extends number ? boolean : MyString){
+
+    }
+}
+
+const minhaFuncao = myFunction2(100)
+minhaFuncao(true)
+
+type NumberOrNever<T> = T extends number ? number : never
+
+const teste : NumberOrNever<number> = 10
+
+// type OnePropertyOfSquare = "x"| "y" | "width" | "heiht"
+type OnePropertyOfSquare = keyof Square
+let onePropertyOfSquare: OnePropertyOfSquare = "x"
+
+//Mapped Types
+
+type Props = "x" | "y" | "z" | "a"
+
+// type MappedProps = {
+//     "x": number,
+//     "y": number,
+//     "z": number,
+//     "a": number
+// }
+
+type MappedFromProps<T extends string | number | symbol> = {
+    [P in T]: P
+}
+
+type MyMappedTypes = MappedFromProps<Props>
+
+type MappedFromProps2<T> = {
+    readonly [P in keyof T] : T[P]
+}
+
+type Teste = MappedFromProps2<{a: boolean, b: "b"}>
