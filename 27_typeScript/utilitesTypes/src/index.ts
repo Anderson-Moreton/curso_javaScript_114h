@@ -154,3 +154,37 @@ type MappedFromProps2<T> = {
 }
 
 type Teste = MappedFromProps2<{a: boolean, b: "b"}>
+
+// Lookup Types
+
+type BankAcount = {
+    id: number,
+    name: string,
+    count: {
+        agency: number,
+        code: number,
+        digit: number
+    }
+}
+
+type Id = BankAcount["id"]
+type Count = BankAcount["count"]
+type Digit = BankAcount["count"]["digit"]
+
+// typeof
+
+const myCount : BankAcount = {
+    id: 1,
+    name: "Anderson",
+    count: {
+        agency: 2,
+        code: 3,
+        digit: 4
+    }
+}
+
+type TypeOfMyCount = typeof myCount
+type TypePfMyCountId = typeof myCount.id
+
+let minhaString = "Ola Mundo"
+let Strin2: typeof minhaString
