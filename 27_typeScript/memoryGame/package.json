@@ -10,7 +10,7 @@
     "css:w": "npm run css && node-sass src/scss/estilo.scss -w dist/css/app.css"
   },
   "keywords": [],
-  "author": "Anderson Moreton",
+  "author": "Daniel Tapias Morales <tapmorales@gmail.com> (tapmorales.com)",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
