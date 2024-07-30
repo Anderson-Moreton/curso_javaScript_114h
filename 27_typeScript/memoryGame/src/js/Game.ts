@@ -24,7 +24,7 @@ export class Game {
         Array.from(this.dom.querySelectorAll('[data-card]')).forEach((card, i) => {
             card.addEventListener("click", e => {
 
-                if (this.firstCard === e.currentTarget ||
+                if (this.firstCard === e.currentTarget || 
                     this.secondCard === e.currentTarget ||
                     (e.currentTarget as HTMLDivElement).classList.contains("show")
                 ) return
