@@ -21,8 +21,7 @@ const eventFire: EventFire = function (evt: MouseEvent) {
         const event2 = new CustomEvent("customClick", { detail: n + 1 })
         testEvent3?.dispatchEvent(event2)
     }
-
-
+    
 }
 
 testEvent1.addEventListener("click", eventFire)
