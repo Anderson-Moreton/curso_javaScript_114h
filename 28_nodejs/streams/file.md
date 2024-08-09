@@ -1,0 +1,1 @@
+Olá Mundo, eu estou aprendendo JavaScript.
