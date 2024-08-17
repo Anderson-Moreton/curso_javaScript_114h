@@ -28,4 +28,20 @@ app.post("/tasks", (req, res) => {
 
 })
 
+app.route("/tasks/:id")
+    .get((req, res) => {
+        res.send(tasks.filter(task => task.id === parseInt(req.params.id)))
+    })
+    .put((req, res) => { 
+        const {title, completed, creatdAt, updatedAt, id, userId} = req.body
+        const newTask = {title, completed, creatdAt, updatedAt, id, userId}
+
+        const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+        tasks.splice(taskIndex, 1, newTask)
+
+        res.send(newTask)
+    })
+    .patch((req, res) => { })
+    .delete((req, res) => { })
+
 app.listen(3001)
