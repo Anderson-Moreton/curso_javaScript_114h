@@ -41,7 +41,23 @@ app.route("/tasks/:id")
 
         res.send(newTask)
     })
-    .patch((req, res) => { })
+    .patch((req, res) => { 
+        const { title, completed, userId } = req.body
+        const taskById = tasks.filter(task => task.id === parseInt(req.params.id))[0]
+        const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+
+        const updatedAt = Date.now()
+
+        const taskUpdated = { title, completed, userId, updatedAt }
+
+        for (let prop in taskUpdated) {
+            if (typeof taskUpdated[prop] === "undefined") delete taskUpdated[prop]
+        }
+
+        const newTask = { ...taskById, ...taskUpdated }
+        tasks.splice(taskIndex, 1, newTask)
+        res.send(newTask)
+    })
     .delete((req, res) => { })
 
 app.listen(3001)
