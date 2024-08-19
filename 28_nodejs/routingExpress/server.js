@@ -58,6 +58,11 @@ app.route("/tasks/:id")
         tasks.splice(taskIndex, 1, newTask)
         res.send(newTask)
     })
-    .delete((req, res) => { })
+    .delete((req, res) => { 
+        const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
+
+        const deletedTaks = tasks.splice(taskIndex, 1)
+        res.send(deletedTaks)
+    })
 
 app.listen(3001)
