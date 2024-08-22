@@ -1,0 +1,17 @@
+const tasks = require('./../../data/tasks.json')
+
+exports.get = async (id) => {
+    if(!isNaN(id)) {
+        return tasks.find(taks => tasks.id === parseInt(id))
+    }
+    return tasks
+}
+
+exports.post = async (data) => {
+    const newData = {
+        ...data,
+        id: tasks[tasks.length - 1].id + 1
+    }
+    tasks.push(newData)
+    return newData
+}

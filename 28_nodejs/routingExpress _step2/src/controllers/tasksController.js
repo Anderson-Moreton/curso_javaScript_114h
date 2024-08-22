@@ -1,7 +1,14 @@
+const repository = require('./../repository/tasks.repository')
+
 const tasks = require('./../../data/tasks.json')
 
 exports.get = async(req, res) => {
-    res.send(tasks)
+    try {
+        let tasks = await repository.get()
+        res.status(200).send(tasks)
+    } catch (e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
 }
 
 exports.post = async(req, res) => {
@@ -12,16 +19,25 @@ exports.post = async(req, res) => {
         completed: false,
         creatdAt: Date.now(),
         updatedAt: null,
-        userId,
-        id: tasks[tasks.length - 1].id +1
+        userId
     }
 
-    tasks.push(newTask)
-    res.send(newTask)
+    // tasks.push(newTask)
+    try {
+        const data = await repository.post(newTask)
+        res.status(201).send(newTask)
+    } catch (e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
 }
 
-exports.getById = async(req, res) => {
-    res.send(tasks.find(task => task.id === parseInt(req.params.id)))
+exports.getById = async (req, res) => {
+    try {
+        const data = await repository.get(parseInt(req.params.id))
+        res.status(200).send(data)
+    } catch (e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
 }
 
 exports.put = async(req, res) => {
