@@ -41,31 +41,34 @@ exports.getById = async (req, res) => {
 }
 
 exports.put = async(req, res) => {
-    const {title, completed, creatdAt, updatedAt, id, userId} = req.body
-    const newTask = {title, completed, creatdAt, updatedAt, id, userId}
-
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-    tasks.splice(taskIndex, 1, newTask)
-
-    res.send(newTask)
-}
-
-exports.patch = async(req, res) => {
-    const { title, completed, userId } = req.body
-    const taskById = tasks.find(task => task.id === parseInt(req.params.id))[0]
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-
-    const updatedAt = Date.now()
-
-    const taskUpdated = { title, completed, userId, updatedAt }
-
-    for (let prop in taskUpdated) {
-        if (typeof taskUpdated[prop] === "undefined") delete taskUpdated[prop]
+    const {title, completed, creatdAt, updatedAt, userId} = req.body
+    const newTask = {
+        title, 
+        completed, 
+        creatdAt, 
+        updatedAt, 
+        id: req.params.id,
+        userId
     }
 
-    const newTask = { ...taskById, ...taskUpdated }
-    tasks.splice(taskIndex, 1, newTask)
-    res.send(newTask)
+    try {
+        const data = await repository.put(newTask, req.params.id)
+        res.send(data)
+    } catch(e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
+    res.status(200).send(newTask)
+}
+
+exports.patch = async (req, res) => {
+    const { title, completed, userId } = req.body
+
+    try {
+        const data = await repository.patch({title, completed, userId}, req.params.id)
+        res.status(200).send(data)
+    } catch(e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
 }
 
 exports.delete = async(req, res) => {
