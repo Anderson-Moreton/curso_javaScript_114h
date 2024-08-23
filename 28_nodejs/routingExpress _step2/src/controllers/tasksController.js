@@ -14,6 +14,10 @@ exports.get = async(req, res) => {
 exports.post = async(req, res) => {
     const {title, userId} = req.body
 
+    if(!title || !userId || isNaN(uderId)) {
+        return res.status(400).send({ message: "Erro 500", err: "Requisição não formatada corretamente." })
+    }
+
     const newTask = {
         title,
         completed: false,
@@ -34,7 +38,11 @@ exports.post = async(req, res) => {
 exports.getById = async (req, res) => {
     try {
         const data = await repository.get(parseInt(req.params.id))
-        res.status(200).send(data)
+        if(data) {
+            res.status(200).send(data)
+        }else {
+            res.status(404).end()
+        }
     } catch (e) {
         res.status(500).send({ message: "Erro 500", err: e })
     }
@@ -51,13 +59,23 @@ exports.put = async(req, res) => {
         userId
     }
 
+    const values = Object.values(newTask)
+
+    if(values.some(v => v === undefined)) {
+        return res.status(400).send({ message: "Erro 500", err: "Requisição não formatada corretamente." }) 
+    }
+
     try {
         const data = await repository.put(newTask, req.params.id)
-        res.send(data)
+        if(data) {
+            res.status(200).send(data)
+        }else {
+            res.status(404).end()
+        }
+        
     } catch(e) {
         res.status(500).send({ message: "Erro 500", err: e })
     }
-    res.status(200).send(newTask)
 }
 
 exports.patch = async (req, res) => {
@@ -65,15 +83,28 @@ exports.patch = async (req, res) => {
 
     try {
         const data = await repository.patch({title, completed, userId}, req.params.id)
-        res.status(200).send(data)
+        if(data) {
+            res.status(200).send(data)
+        }else {
+            res.status(404).end()
+        }
+        
     } catch(e) {
         res.status(500).send({ message: "Erro 500", err: e })
     }
 }
 
 exports.delete = async(req, res) => {
-    const taskIndex = tasks.findIndex(task => task.id === parseInt(req.params.id))
-
-    const deletedTaks = tasks.splice(taskIndex, 1)
-    res.send(deletedTaks)
+    try {
+        const data = await repository.delete(req.params.id)
+        if(data) {
+            res.status(200).send(data)
+        }else {
+            res.status(404).end()
+        }
+        
+    } catch(e) {
+        res.status(500).send({ message: "Erro 500", err: e })
+    }
+    res.send(deletedTask)
 }

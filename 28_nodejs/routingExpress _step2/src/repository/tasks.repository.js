@@ -18,6 +18,9 @@ exports.post = async (data) => {
 
 exports.put = async (data, id) => {
     const taskIndex = tasks.findIndex(task => task.id === parseInt(id))
+    if(taskIndex < 0) {
+        return null
+    }
     tasks.splice(taskIndex, 1, data)
     return data
 }
@@ -26,6 +29,9 @@ exports.patch = async (data, id) => {
     const { title, completed, userId } = data
     const taskById = tasks.find(task => task.id === parseInt(id))
     const taskIndex = tasks.findIndex(task => task.id === parseInt(id))
+    if(taskIndex < 0) {
+        return null
+    }
     const updatedAt = Date.now()
     const taskUpdated = { title, completed, userId, updatedAt }
 
@@ -37,3 +43,14 @@ exports.patch = async (data, id) => {
 
     tasks.splice(taskIndex, 1, newTask)
 }
+
+exports.delete = async (id) => {
+    const taskIndex = tasks.findIndex(task => task.id === parseInt(id))
+    if(taskIndex < 0) {
+        return null
+    }
+
+    const deletedTask = tasks.splice(taskIndex, 1)
+
+    return deletedTask
+}      
