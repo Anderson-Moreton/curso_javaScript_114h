@@ -37,7 +37,7 @@ exports.post = async(req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const data = await repository.get(parseInt(req.params.id))
+        const data = await repository.get(req.params.id)
         if(data) {
             res.status(200).send(data)
         }else {
@@ -55,7 +55,7 @@ exports.put = async(req, res) => {
         completed, 
         creatdAt, 
         updatedAt, 
-        id: req.params.id,
+        // id: req.params.id,
         userId
     }
 
